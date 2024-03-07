@@ -1,35 +1,55 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { initialState } from './contactsApi';
-import { fetchContacts, addContact, deleteContact } from './contactsApi';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+export const fetchContacts = createAsyncThunk('contacts/fetchAll', async () => {
+  try {
+    const response = await fetch(
+      'https://657cc619853beeefdb99f3c6.mockapi.io/vlasark/contacts'
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error('Failed to fetch contacts');
+  }
+});
 
 const ContactSlice = createSlice({
   name: 'contacts',
-  initialState,
-  reducers: {},
+  initialState: {
+    items: [],
+    isLoading: false,
+    error: null,
+    filter: '',
+  },
+  reducers: {
+    addContact: (state, action) => {
+      state.items.push(action.payload);
+    },
+    deleteContact: (state, action) => {
+      state.items = state.items.filter(
+        contact => contact.id !== action.payload
+      );
+      // state.items = [...state.items];
+    },
+    updateFilter: (state, action) => {
+      state.filter = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.pending, state => {
-        state.contacts.isLoading = true;
-        state.contacts.error = null;
+        state.isLoading = true;
+        state.error = null;
       })
       .addCase(fetchContacts.fulfilled, (state, action) => {
-        state.contacts.isLoading = false;
-        state.contacts.items = action.payload;
+        state.isLoading = false;
+        state.items = action.payload;
       })
       .addCase(fetchContacts.rejected, (state, action) => {
-        state.contacts.isLoading = false;
-        state.contacts.error = action.error.message;
-      })
-      .addCase(addContact.fulfilled, (state, action) => {
-        state.contacts.items.push(action.payload);
-      })
-      .addCase(deleteContact.fulfilled, (state, action) => {
-        state.contacts.items = state.contacts.items.filter(
-          contact => contact.id !== action.payload.contactId
-        );
+        state.isLoading = false;
+        state.error = action.error.message;
       });
   },
 });
 
+export const { addContact, deleteContact, updateFilter } = ContactSlice.actions;
 export default ContactSlice.reducer;
-export { fetchContacts, addContact, deleteContact };
