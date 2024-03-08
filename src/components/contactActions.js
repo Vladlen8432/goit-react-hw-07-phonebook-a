@@ -65,3 +65,22 @@ export const handleDeleteContact = async (dispatch, id) => {
     console.error(error);
   }
 };
+
+// export const handleDeleteContact = async (dispatch, id) => {
+//   try {
+//     const response = await fetch(
+//       `https://657cc619853beeefdb99f3c6.mockapi.io/vlasark/contacts/${id}`,
+//       {
+//         method: 'DELETE',
+//       }
+//     );
+
+//     if (!response.ok) {
+//       throw new Error('Failed to delete contact from the backend');
+//     }
+
+//     dispatch(deleteContact(id));
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
