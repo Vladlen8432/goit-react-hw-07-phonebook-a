@@ -1,6 +1,5 @@
 import { nanoid } from 'nanoid';
 import { addContact, deleteContact } from './Redux/ContactSlice';
-// import { addContact, deleteContact, updateFilter } from './Redux/ContactSlice';
 //https://657cc619853beeefdb99f3c6.mockapi.io/vlasark/contacts
 
 export const handleAddContact = async (
