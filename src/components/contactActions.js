@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid';
 import { addContact, deleteContact } from './Redux/ContactSlice';
 // import { addContact, deleteContact, updateFilter } from './Redux/ContactSlice';
+//https://657cc619853beeefdb99f3c6.mockapi.io/vlasark/contacts
 
 export const handleAddContact = async (
   dispatch,
@@ -23,7 +24,7 @@ export const handleAddContact = async (
 
     try {
       const response = await fetch(
-        'https://657cc619853beeefdb99f3c6.mockapi.io/vlasark/contacts',
+        'https://65ec423a0ddee626c9afd73e.mockapi.io/vlashark/contacts',
         {
           method: 'POST',
           headers: {
@@ -50,7 +51,7 @@ export const handleAddContact = async (
 export const handleDeleteContact = async (dispatch, id) => {
   try {
     const response = await fetch(
-      `https://657cc619853beeefdb99f3c6.mockapi.io/vlasark/contacts/${id}`,
+      `https://65ec423a0ddee626c9afd73e.mockapi.io/vlashark/contacts/${id}`,
       {
         method: 'DELETE',
       }
